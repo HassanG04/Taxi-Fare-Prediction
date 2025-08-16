@@ -1,0 +1,98 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ccffcc;
+    /* light green */
+    color: black;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Navbar */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2c3e50;
+    padding: 0.5rem 1rem;
+    color: white;
+}
+
+nav h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* Buttons - Modern look */
+button,
+a.button-link {
+    padding: 10px 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #4caf50, #45a049);
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover,
+a.button-link:hover {
+    background: linear-gradient(135deg, #45a049, #3e8e41);
+    transform: scale(1.05);
+}
+
+.toggle-mode {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.toggle-mode:hover {
+    background-color: #1e874b;
+}
+
+.toggle-mode:active {
+    transform: scale(0.96);
+}
+button.toggle-mode {
+    background: linear-gradient(135deg, #ffffff, #e6e6e6);
+    color: black;
+    font-weight: normal;
+}
+
+button.toggle-mode:hover {
+    background: linear-gradient(135deg, #dddddd, #cccccc);
+}
+
+/* Dark mode */
+.dark-mode {
+    background-color: #0b3d0b;
+    /* deep dark green */
+    color: white;
+}
+
+.dark-mode nav {
+    background-color: #145214;
+    /* darker navbar green */
+}
+
+.dark-mode button,
+.dark-mode a.button-link {
+    background: linear-gradient(135deg, #2e8b57, #246b45);
+}
+
+.dark-mode button:hover,
+.dark-mode a.button-link:hover {
+    background: linear-gradient(135deg, #246b45, #1d5c3a);
+}
+
+.dark-mode button.toggle-mode {
+    background: linear-gradient(135deg, #f1f1f1, #cccccc);
+    color: black;
+}

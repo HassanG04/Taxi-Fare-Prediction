@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Taxi Fare Prediction</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* Navbar */
+        nav {
+            background-color: #1e6f5c;
+            padding: 0.8rem 1rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav h1 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        .toggle-mode {
+            background: #2ecc71;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+            transition: background 0.3s;
+        }
+        .toggle-mode:hover {
+            background: #27ae60;
+        }
+
+        /* Form Styling */
+        form {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 1rem;
+        }
+        input, select {
+            width: 100%;
+            padding: 0.6rem;
+            margin-top: 0.3rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        .button-group button {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+            transition: background 0.3s;
+        }
+        /* Light mode colors */
+        .random-btn {
+            background: rgb(255,223,0);
+            color: black;
+        }
+        .random-btn:hover {
+            background: #DAA520;
+        }
+        .submit-btn {
+            background: #2ecc71; /* light green */
+        }
+        .submit-btn:hover {
+            background: #27ae60;
+        }
+        /* Dark Mode */
+        .dark-mode {
+            background-color: #0f3327;
+            color: #f1f1f1;
+        }
+        .dark-mode form {
+            background-color: #145244;
+        }
+        .dark-mode nav {
+            background-color: #0a221a;
+        }
+        .dark-mode input, 
+        .dark-mode select {
+            background-color: #1f3e34;
+            color: white;
+            border: 1px solid #3b6b5b;
+        }
+        .dark-mode .random-btn {
+        background: #bdc3c7;
+        color: black;
+        }
+        .dark-mode .random-btn:hover {
+        background: #a9a9a9;
+        }
+        .dark-mode .submit-btn {
+        background: #145244; /* dark green */
+        }
+        .dark-mode .submit-btn:hover {
+        background: #0f3b33;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>Taxi Fare Predictor</h1>
+        <button class="toggle-mode" type="button">🌙</button>
+    </nav>
+    <form method="post">
+        {% csrf_token %}
+
+        <label>Car Condition:</label>
+        <select name="Car Condition" required>
+            <option value="">Select...</option>
+            <option value="Good">Good</option>
+            <option value="Fair">Fair</option>
+            <option value="Poor">Poor</option>
+        </select>
+
+        <label>Weather:</label>
+        <select name="Weather" required>
+            <option value="">Select...</option>
+            <option value="Clear">Clear</option>
+            <option value="Rainy">Rainy</option>
+            <option value="Snowy">Snowy</option>
+            <option value="Cloudy">Cloudy</option>
+        </select>
+
+        <label>Traffic Condition:</label>
+        <select name="Traffic Condition" required>
+            <option value="">Select...</option>
+            <option value="Light">Light</option>
+            <option value="Moderate">Moderate</option>
+            <option value="Heavy">Heavy</option>
+        </select>
+
+        <label>Pickup Datetime:</label>
+        <input type="datetime-local" name="pickup_datetime" required>
+
+        <label>Pickup Longitude:</label>
+        <input type="number" step="0.000001" name="pickup_longitude" required>
+
+        <label>Pickup Latitude:</label>
+        <input type="number" step="0.000001" name="pickup_latitude" required>
+
+        <label>Dropoff Longitude:</label>
+        <input type="number" step="0.000001" name="dropoff_longitude" required>
+
+        <label>Dropoff Latitude:</label>
+        <input type="number" step="0.000001" name="dropoff_latitude" required>
+
+        <label>Passenger Count:</label>
+        <input type="number" name="passenger_count" min="1" required>
+
+        <label>Hour:</label>
+        <input type="number" name="hour" min="0" max="23" required>
+
+        <label>Day:</label>
+        <input type="number" name="day" min="1" max="31" required>
+
+        <label>Month:</label>
+        <input type="number" name="month" min="1" max="12" required>
+
+        <label>Weekday:</label>
+        <select name="weekday" required>
+            <option value="">Select...</option>
+            <option value="0">Sunday</option>
+            <option value="1">Monday</option>
+            <option value="2">Tuesday</option>
+            <option value="3">Wednesday</option>
+            <option value="4">Thursday</option>
+            <option value="5">Friday</option>
+            <option value="6">Saturday</option>
+        </select>
+
+        <label>Year:</label>
+        <input type="number" name="year" min="2000" required>
+
+        <label>JFK Distance:</label>
+        <input type="number" step="0.0001" name="jfk_dist" required>
+
+        <label>EWR Distance:</label>
+        <input type="number" step="0.0001" name="ewr_dist" required>
+
+        <label>LGA Distance:</label>
+        <input type="number" step="0.0001" name="lga_dist" required>
+
+        <label>Statue of Liberty Distance:</label>
+        <input type="number" step="0.0001" name="sol_dist" required>
+
+        <label>NYC Distance:</label>
+        <input type="number" step="0.0001" name="nyc_dist" required>
+
+        <label>Total Distance:</label>
+        <input type="number" step="0.0001" name="distance" required>
+
+        <label>Bearing:</label>
+        <input type="number" step="0.01" name="bearing" required>
+
+        <div class="button-group">
+            <button type="button" class="random-btn" onclick="fillRandomValues()">🎲 Random</button>
+            <button type="submit" class="submit-btn">🚕 Predict</button>
+        </div>
+    </form>
+
+    <script>
+        // Preserve dark mode
+        if (localStorage.getItem('dark-mode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+        document.querySelector('.toggle-mode').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('dark-mode', document.body.classList.contains('dark-mode'));
+        });
+
+        // Fill random values
+        function fillRandomValues() {
+            const form = document.forms[0];
+            form["Car Condition"].value = ["Good", "Fair", "Poor"][Math.floor(Math.random()*3)];
+            form["Weather"].value = ["Clear", "Rainy", "Snowy", "Cloudy"][Math.floor(Math.random()*4)];
+            form["Traffic Condition"].value = ["Light", "Moderate", "Heavy"][Math.floor(Math.random()*3)];
+
+            const randomDate = new Date(2025, Math.floor(Math.random()*12), Math.floor(Math.random()*28)+1, Math.floor(Math.random()*24), Math.floor(Math.random()*60));
+            form["pickup_datetime"].value = randomDate.toISOString().slice(0,16);
+
+            form["pickup_longitude"].value = (-74 + Math.random()*0.1).toFixed(6);
+            form["pickup_latitude"].value = (40.7 + Math.random()*0.1).toFixed(6);
+            form["dropoff_longitude"].value = (-74 + Math.random()*0.1).toFixed(6);
+            form["dropoff_latitude"].value = (40.7 + Math.random()*0.1).toFixed(6);
+
+            form["passenger_count"].value = Math.floor(Math.random()*4) + 1;
+            form["hour"].value = randomDate.getHours();
+            form["day"].value = randomDate.getDate();
+            form["month"].value = randomDate.getMonth() + 1;
+            form["weekday"].value = randomDate.getDay();
+            form["year"].value = 2025;
+
+            form["jfk_dist"].value = (Math.random()*25).toFixed(2);
+            form["ewr_dist"].value = (Math.random()*25).toFixed(2);
+            form["lga_dist"].value = (Math.random()*25).toFixed(2);
+            form["sol_dist"].value = (Math.random()*15).toFixed(2);
+            form["nyc_dist"].value = (Math.random()*10).toFixed(2);
+            form["distance"].value = (Math.random()*30).toFixed(2);
+            form["bearing"].value = (Math.random()*360).toFixed(2);
+        }
+    </script>
+</body>
+</html>

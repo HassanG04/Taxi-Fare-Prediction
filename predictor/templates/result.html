@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f8;
+            transition: background-color 0.3s, color 0.3s;
+            text-align: center;
+        }
+        nav {
+            background-color: #1e6f5c;
+            padding: 0.8rem 1rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav h1 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        .toggle-mode {
+            background: #2ecc71;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+            transition: background 0.3s;
+        }
+        .toggle-mode:hover {
+            background: #27ae60;
+        }
+        .result-box {
+            max-width: 500px;
+            margin: 3rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .result-box h1 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        .result-box p {
+            font-size: 1.5rem;
+            color: #007bff;
+            margin-bottom: 1.5rem;
+        }
+        .result-box a {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        .result-box a:hover {
+            background: #2980b9;
+        }
+        /* Dark Mode */
+        .dark-mode {
+            background-color: #0f3327;
+            color: #f1f1f1;
+        }
+        .dark-mode nav {
+            background-color: #0a221a;
+        }
+        .dark-mode .result-box {
+            background-color: #145244;
+        }
+        .dark-mode .result-box a {
+            background: #2e8b57;
+        }
+        .dark-mode .result-box a:hover {
+            background: #246b45;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>Taxi Fare Predictor</h1>
+        <button class="toggle-mode" type="button">🌙</button>
+    </nav>
+    <div class="result-box">
+        <h1>Predicted Fare</h1>
+        <p>${{ fare|floatformat:2 }}</p>
+        <a href="{% url 'predict_fare' %}">Make Another Prediction</a>
+    </div>
+    <script>
+        // Dark mode persistence
+        if (localStorage.getItem('dark-mode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+        document.querySelector('.toggle-mode').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('dark-mode', document.body.classList.contains('dark-mode'));
+        });
+    </script>
+</body>
+</html>
